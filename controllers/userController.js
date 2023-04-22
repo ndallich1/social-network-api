@@ -1,8 +1,8 @@
-const { User, Thought } = require('../models');
+const { User, Thought } = require("../models");
 
 module.exports = {
   // get all users (GET)
-  getUsers(req,res) {
+  getUsers(req, res) {
     User.find()
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
@@ -10,12 +10,14 @@ module.exports = {
 
   // get a single user by id, populated thought, and friend data  (GET)
   getSingleUser(req, res) {
-    User.findOne({_id: req.params.userId})
+    User.findOne({ _id: req.params.userId })
       .populate("thoughts", "friends")
       .then((user) =>
-          !users
-            ? res.status(404).json({ message: 'No user with that ID' })
-            : res.json(user)
+        !user
+          ? res.status(404).json({ message: "No user with that ID" })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
   },
 
   // create a new user (POST)
@@ -37,7 +39,7 @@ module.exports = {
     )
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user with this id!' })
+          ? res.status(404).json({ message: "No user with this id!" })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
@@ -48,10 +50,10 @@ module.exports = {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
         !users
-          ? res.status(404).json({ message: 'No user with that ID' })
+          ? res.status(404).json({ message: "No user with that ID" })
           : Thought.deleteMany({ _id: { $in: user.thoughts } })
       )
-      .then(() => res.json({ message: 'User and thoughts deleted!' }))
+      .then(() => res.json({ message: "User and thoughts deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
-}
+};
