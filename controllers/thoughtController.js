@@ -8,7 +8,7 @@ module.exports = {
       res.json(thoughts);
     } catch (err) {
       console.log(err);
-      return res.status(500).json(err);
+      res.status(500).json(err);
     }
   },
 
@@ -21,7 +21,7 @@ module.exports = {
         : res.json(thought);
     } catch (err) {
       console.log(err);
-      return res.status(500).json(err);
+      res.status(500).json(err);
     }
   },
 
@@ -37,13 +37,12 @@ module.exports = {
         username: req.body.username,
       });
       // take thought and push to user
-      user.newThought.push(newThought);
+      user.thoughts.push(newThought);
       // save new thought and user
       await Promise.all([newThought.save(), user.save()]);
       res.json(newThought);
     } catch (err) {
-      console.log(err);
-      return res.status(500).json(err);
+      res.status(500).json(err);
     }
   },
 
@@ -60,7 +59,7 @@ module.exports = {
         : res.json(thought);
     } catch (err) {
       console.log(err);
-      return res.status(500).json(err);
+      res.status(500).json(err);
     }
   },
 
@@ -75,7 +74,7 @@ module.exports = {
         : res.json(deleteThought);
     } catch (err) {
       console.log(err);
-      return res.status(500).json(err);
+      res.status(500).json(err);
     }
   },
 
@@ -93,7 +92,7 @@ module.exports = {
       );
     } catch (err) {
       console.log(err);
-      return res.status(500).json(err);
+      res.status(500).json(err);
     }
   },
 
@@ -111,7 +110,7 @@ module.exports = {
       );
     } catch (err) {
       console.log(err);
-      return res.status(500).json(err);
+      res.status(500).json(err);
     }
   },
 };
